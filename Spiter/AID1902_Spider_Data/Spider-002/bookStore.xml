@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<bookstore>
+<book>
+<title class="book_001">Harry Potter</title>
+<author>J K. Rowling</author> 
+<year>2005</year>
+<price>69.99</price>
+</book>
+<book>
+<title class="book_002">Spider</title>
+<author>Mr Wang</author> 
+<year>2018</year>
+<price>49.99</price>
+</book>
+</bookstore>
+
+

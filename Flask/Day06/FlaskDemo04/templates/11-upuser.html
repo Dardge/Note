@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/11-upuser" method="post">
+    <p>
+        用户名:
+        <input type="text" name="username" value="{{user.username}}">
+    </p>
+    <p>
+        年龄:
+        <input type="number" name="age" value="{{user.age}}">
+    </p>
+    <p>
+        邮箱:
+        <input type="email" name="email" value="{{user.email}}">
+    </p>
+    <p>
+        生日:
+        <input type="date" name="birthday" value="{{user.birthday}}">
+    </p>
+    <p>
+        激活:
+        <input type="checkbox" name="isActive"
+        {% if user.isActive %}
+          checked
+        {% endif%}>
+        <input type="hidden" name="id" value="{{user.id}}">
+
+    </p>
+    <p>
+        <button>修改</button>
+    </p>
+</form>
+</body>
+</html>

@@ -1,0 +1,188 @@
+1.模型
+	1.查询
+		1.查询过滤器方法
+			1.filter()
+				1. filter(实体类.属性 == 值)
+				2. filter(实体类.属性 > 值)
+				3. filter(条件1,条件2)
+				   filter(条件1).filter(条件2)
+				4. filter(or_(条件1,条件2))
+				5. filter(实体类.属性.like('%xx%'))
+				6. filter(实体类.属性.in_([值1,值2]))
+				7. filter(实体类.属性.between(数值1,数值2))
+			2.filter_by(属性=值)
+			3.limit(n) & offset(n)
+		2.order_by()
+			作用:排序
+			语法:db.session.query(XXX).order_by("排序规则")
+			示例:
+				1.Users实体中所有的数据按年龄降序排序
+				  select * from users order by age desc
+					db.session.query(Users).order_by("age desc")
+				2.Users实体中所有的数据先按年龄降序排序，再按id升序排序
+				  select * from users order by age desc,id asc
+
+					db.session.query(Users).order_by("age desc,id")
+				3.Users实体中查询出年龄大于18的按age倒序排
+					
+					db.session.query(Users)
+						.filter(Users.age>18)
+						.order_by("age desc")
+						.all()
+		3.聚合查询
+			1.基本的聚合查询
+				1.聚合函数
+					from sqlalchemy import func
+					#func中提供了所有的聚合函数
+					聚合函数:
+						sum() : func.sum()
+						count() :
+						max() :
+						min() :
+						avg() :
+				2.语法
+					db.session
+						.query(
+							func.聚合函数(实体类.属性),
+							func.聚合函数(实体类.属性)
+						).all()
+			2.分组聚合查询
+				db.session.query(查询列,聚合列)
+					.filter(条件) #分组前数据筛选 - where
+					.group_by('分组列名') #分组 - group by
+					.having(条件) #分组后筛选 - having
+				示例:
+					查询users表中年龄大于18岁的，按照isActive分组，组内人数大于2人的组名和人数查询出来
+
+					db.session.query(
+						Users.isActive,
+						func.count(Users.id)
+					).filter(Users.age > 18)
+					 .group_by('isActive')
+					 .having(
+						func.count(Users.id) >= 2
+					 )
+
+				练习:
+					1.查询Users实体中年龄大于18岁的人的平均年龄
+					2.查询Users实体中按isActive分组后,每组的人数是多少
+					3.查询Users实体中按isActive分组后,组内人数大于2人的组名和人数
+	2.修改
+		1.查
+			查询出要修改的实体对象
+		2.改
+			通过 对象.属性=值 修改数据
+		3.保存
+			db.session.add(对象)
+	3.删除
+		1.查
+			查询出要修改的实体对象
+		2.删
+			db.session.delete(对象)
+	4.基于实体类的查询
+		语法:
+			实体类.query.查询过滤器函数().查询执行函数()
+		示例:
+			1.查询Users实体中所有的数据
+				Users.query.all()
+			2.查询Users实体中isActive为True的数据
+				Users.query.filter_by(isActive=True).all()
+				Users.query.filter(Users.isActive==True).all()
+
+2.关系映射
+	1.一对多关系
+		1.什么是一对多
+			A表中的一条数据可以关联到B表中的多条数据
+			B表中的一条数据只能关联到A表中的一条数据
+		2.一对多在数据库中的实现
+			靠 主外键 的关系来实现一对多
+			"一"表中有主键
+			在"多"表中增加外键,表示对"一"表的引用
+		3.在SQLAlchemy中的实现(难点)
+			原则:
+				在"多"实体类中增加对"一"实体类的引用
+				在"一"实体类中增加"关联属性"以及"反向引用关系属性"
+			
+			1.在"多"实体类中
+				增加一个属性/列,要引用到"一"表/类的主键
+				属性名/外键列名 = db.Column(
+					db.TYPE,
+					db.ForeignKey('主键表名.主键列')
+				)
+			2.在"一"实体类中
+				增加 关联属性 和 反向引用关系属性
+				目的:为了创建类(对象)与类(对象)之间的关联关系
+
+				1.关联属性
+					在"一"实体类中，要增加一个<<属性>>来获取"多"的实体对象们
+				2.反向引用关系属性
+					在"一"实体类中做操作最终加到了"多"实体类中
+					在"多"实体类中，要增加一个属性<<属性>>来获取到对应的"一"的实体对象
+				语法:
+					在"一"实体类中增加:
+						属性名 = db.relationship(
+							'多的实体类名',
+							backref='定义反向引用关系属性名',
+							lazy='dynamic'
+						)
+
+				示例:
+					# "多"的实体类
+					class Teacher(db.Model):
+						id = db.Column(db.Integer,primary_key=True)
+						tname = db.Column(db.String(30),nullable=False)
+						tage = db.Column(db.Integer,nullable=False)
+						#增加一个外键列-course_id,引用自Course类(course表)的主键id
+						course_id = db.Column(
+								db.Integer,
+								db.ForeignKey('course.id')
+						)
+				 # "一"的实体类
+				 class Course(db.Model):
+						id = db.Column(db.Integer,primary_key=True)
+						cname = db.Column(db.String(30),nullable=False)
+						#增加对Teacher的关联属性和反向引用关系属性
+						teachers = db.relationship(
+								'Teacher',
+								backref="course",
+								lazy="dynamic"
+						)
+				以上操作执行完毕后,对数据库和程序的影响:
+					1.对数据库的影响
+						在teacher表中增加一个列 - course_id(外键)
+						表示的就是对course的主键id的一个引用
+					2.对程序的影响
+						1.在Teacher类中，会增加一个属性 - course_id
+						  表示的是该Teacher对象关联的课程的id值
+						2.在Course类中，会增加一个属性 - teachers
+							表示的是该Course对象所关联对应的所有的Teacher们
+						3.在Teacher类中，会增加一个属性 - course
+						  表示的是该Teacher对象所关联对应的一门Course的对象
+	2.一对一关系
+	3.多对多关系
+
+
+
+
+
+
+查询users表中所有人的总年龄和平均年龄
+ select avg(age),sum(age) from users
+查询users表中按isActive分组,求每组的平均年龄
+ select isActive,avg(age) from users group by isActive
+查询users表中年龄大于18岁的，按照isActive分组，组内人数大于2人的组名和人数查询出来
+  select isActive,count(id) from users
+	where age > 18
+	group by isActive
+	having count(id) > 2
+
+查询users表中年龄大于"赵金多"的users们的信息
+select * from users
+where age > (
+	select age from users where name='赵金多')
+
+
+
+Teacher 和 Course
+	1名Teacher只能教授一门Course
+	1门Course可以被多名Teacher所教授的

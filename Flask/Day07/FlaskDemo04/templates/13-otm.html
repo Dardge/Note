@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/13-otm" method="post">
+    <p>
+        姓名: <input type="text" name="tname">
+    </p>
+    <p>
+        年龄: <input type="number" name="tage">
+    </p>
+    <p>
+        课程:
+        <select name="cid">
+            {% for cour in courses %}
+            <option value="{{cour.id}}">
+                {{cour.cname}}
+            </option>
+            {% endfor %}
+        </select>
+    </p>
+    <p>
+        <button>注册</button>
+    </p>
+</form>
+</body>
+</html>

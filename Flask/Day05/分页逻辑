@@ -1,0 +1,44 @@
+每页显示　5　条数据
+看第１页数据:
+  select * from users limit 0,5
+看第２页数据:
+  select * from users limit 5,5
+
+1.每页显示的记录的数量　- pageCount
+2.当前想看的页数 - currentPage
+
+http://127.0.0.1:5000/page  #看第１页数据
+http://127.0.0.1:5000/page?currentPage=3 #看第3页数据
+
+@app.route('/page')
+def page_views():
+
+    pageCount = 5 #每页显示的记录的数量
+
+    #接收传递过来的想看的页数参数　- currentPage
+    currentPage = int(request.args.get('currentPage',1) )#当前想看的页数
+
+    #1.计算要跳过多少条数据
+    ost = (currentPage - 1) * pageCount
+    #2.查询对应的数据
+    users = db.session.query(Users).offset(ost).limit(pageCount).all()
+
+    #3.计算页码
+    #3.1 首页:永远都是第１页
+    #3.2　尾页:根据记录数以及pageCount计算出来
+    #3.3 上一页:
+       如果currentPage为1的话,上一页还是1
+       如果currentPage不是1的话,上一页则为currentPage - 1
+    #3.4 下一页:
+       如果currentPage为尾页的话,下一页还是尾页
+       如果currentPage不是尾页的话,下一页则为currentPage + 1
+
+
+
+在　模板中　
+　１．显示　users 中的数据们
+　２．拼超链接地址
+　　　　<a href="/page?pageCurrent=1">首页</a>
+    <a href="/page?pageCurrent=计算出的上一页页码">上一页</a>
+    <a href="/page?pageCurrent=计算出的下一页页码">下一页</a>
+    <a href="/page?pageCurrent=计算出的尾页页码">尾页</a>

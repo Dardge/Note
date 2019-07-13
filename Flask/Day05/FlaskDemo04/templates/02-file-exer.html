@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/02-file-exer" method="post" enctype="multipart/form-data">
+    <p>
+        标题: <input type="text" name="title">
+    </p>
+    <p>
+        类型:
+        <input type="radio" name="type" value="1" checked>普通博客
+        <input type="radio" name="type" value="2">公开博客
+        <input type="radio" name="type" value="3">其他博客
+    </p>
+    <p>
+        内容:
+        <textarea name="content" cols="100" rows="10"></textarea>
+    </p>
+    <p>
+        图像: <input type="file" name="img">
+    </p>
+    <p>
+        <button>发表</button>
+    </p>
+</form>
+</body>
+</html>

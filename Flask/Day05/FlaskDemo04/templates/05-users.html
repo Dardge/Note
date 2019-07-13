@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="/05-users">
+        <input type="text" name="kw" value="{{params.kw}}">
+        <button>搜索</button>
+    </form>
+    <table width="500" border="1">
+        <tr>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>邮箱</th>
+            <th>生日</th>
+            <th>操作</th>
+        </tr>
+        <!--
+            users = db.session.query(Users)
+              .filter(Users.isActive==True)
+         -->
+        {% for u in params.users %}
+            <tr>
+                <td>{{u.username}}</td>
+                <td>{{u.age}}</td>
+                <td>{{u.email}}</td>
+                <td>{{u.birthday}}</td>
+                <td>
+                    <a href="#">修改</a>
+                    <a href="#">删除</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

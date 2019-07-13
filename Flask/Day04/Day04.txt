@@ -1,0 +1,155 @@
+赵旭
+zhaoxu@tedu.cn
+
+WEB全栈式
+
+1.request
+	1.文件上传
+		1.回顾
+			1.前端
+				1.method = post
+				2.enctype = multipart/form-data
+				   
+				<input type="file">
+			2.服务器端
+				1.f = request.files['name']
+				2.f.save(filename)
+2.模型 - Models
+	1.什么是模型
+		模型 - 根据数据库表结构而创建出来的class
+		一张表一个类
+		一个字段就是一个属性
+	2.模型框架 - ORM
+		1.ORM - Object Relational Mapping
+			中文名:对象关系映射
+			简称:ORM,O/RM,O/R Mapping
+		2.ORM的三大特征
+			1.数据表到编程类的映射
+			2.数据类型的映射
+			3.关系映射
+				将数据库中表与表之间的关系 对应到 编程语言中类与类之间的关系
+		3.ORM的优点
+			1.封装操作提升效率
+			2.省略庞大的数据访问层
+
+	3.Flask中的ORM框架
+		1.SQLAlchemy
+			1.安装SQLAlchemy	
+				pip3 install sqlalchemy
+			2.Flask 中需要使用flask-sqlalchemy支持包
+				pip3 install flask-sqlalchemy
+
+			查看已安装的包 pip3 list
+		2.创建数据库
+			创建一个 flaskDB 的数据库
+			create database flaskDB default charset utf8 collate utf8_general_ci;
+		3.Flask中配置数据库
+			语法:
+				app.config['SQLALCHEMY_DATABASE_URI']="mysql://用户名:密码@数据库服务器地址:端口号/数据库名称"
+
+				示例:
+					app.config['SQLALCHEMY_DATABASE_URI']="mysql://root:123456@127.0.0.1:3306/flaskDB"
+	4.定义模型类(重点)
+		1.作用
+			通过编写模型类的方式，让程序自动生成数据库表
+			模型类也称为实体类
+		2.语法
+			class MODELNAME(db.Model):
+				__tablename__ = "TABLENAME"
+				COLUMN_NAME = db.Column(db.TYPE,OPTIONS)
+
+				1.MODELNAME
+					定义模型类名称,参考表名
+				2.TABLENAME
+					指定要映射到的表名,如果表不存在的话，则创建表
+				3.COLUMN_NAME
+					属性名,映射到数据表中就是列名
+				4.TYPE
+					映射到列的数据类型
+				5.OPTIONS
+					列选项
+
+				db.TYPE 列类型:
+				类型名      数据库    python       说明
+				Integer     int       int          
+				Float       float     float 
+				Numeric     numeric   Decimal      定点数
+				String      varchar   str
+				Text        text      str
+				Boolean     tinyint   bool
+				Date        date      datetime.date
+				DateTime    datetime  datetime.datetime
+		
+
+				OPTIOINS 列选项
+				选项名         说明
+				autoincrement  如果取值为True,则自增长
+					注意:
+						如果列类型为整型,并且是主键的话,默认就是自增长的
+				primary_key    如果取值为True表示该列为主键
+				unique         如果取值为True表示该列唯一
+				index          如果取值为Ture表示该列加索引
+				nullable       如果设置为True表示该列可为空
+				default        指定该列默认值
+				
+
+				练习:
+					1.创建 Student 实体类，表名 student
+					  1.id，主键，自增
+						2.sname，姓名，长度为30且不为空字符串
+						3.sage，年龄，整数
+						4.isActive ，启用状态，bool类型,默认为True
+					2.创建Teacher类，表名 teacher
+						1.id ， 主键自增
+						2.tname ， 同 sname 一样
+						3.tage ，年龄 ，整数
+					3.创建Course类，表名 course
+						1.id   2. cname 课程名称，长度30字符串
+	5.数据库迁移
+		1.什么是数据库迁移
+			将实体类的改动再映射回数据库
+		2.依赖于第三方库
+			1.flask-script
+				安装: pip3 install flask-script
+				包:flask_script
+				类:Manager
+				作用:对项目进行管理 
+					启动项目,为项目增加管理指令
+			2.flask-migrate
+				安装: pip3 install flask-migrate
+				包:flask_migrate
+				类:
+					1.Migrate
+						作用:协调app 和 db 之间的关系
+					2.MigrateCommand
+						作用:在终端中提供实体类迁移的指令
+		3. python3 run01.py db 
+			1.init
+				作用:执行项目和数据库的初始化操作
+				特点:一个项目中只执行一次即可
+			2.migrate
+				作用:将编辑好的实体类生成一个中间文件并保存
+				特点:只要检测到实体类有更改,就会生成中间文件
+			3.upgrade
+				作用:将中间文件映射回数据库
+
+
+作业:
+	参考blog_finally中 register.html 和 release.html
+	分析数据库模型
+	通过 register.html 分析用户表(User)有哪些列
+	通过 release.html 分析文章表(Topic)有哪些列
+
+	创建数据库 - Blog
+	创建项目 - Blog
+	创建实体类 - User,Topic
+
+
+
+
+
+
+
+数据库工具:
+	1.Navicat for mysql 
+	2.PowerDesinger

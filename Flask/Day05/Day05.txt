@@ -1,0 +1,72 @@
+1.模型 - Models
+	1.CRUD
+		1.增加 - C
+			1.创建实体类对象，并为对象的属性赋值
+				user = Users()
+				user.username = "吕泽玛利亚"
+				user.age = 30
+				user.isActive = True
+				user.birthday = "1980-10-12"
+			2.将实体对象保存回数据库
+				db.session.add(user) #增加数据
+				db.session.commit() #提交事务
+		2.查询 - R
+			1.基于 db.session 进行查询
+				1.db.session.query()
+					参数:
+						要查询的列,如果查询多个列的话使用 , 隔开，如果要查询所有列,参数为实体类名
+
+						示例:
+							1.查询Users实体类中的id,username
+								db.session.query(Users.id,Users.username)
+							2.查询Users实体类中所有的列
+								db.session.query(Users)
+							3.查询Users以及Wife实体类所有的列
+								db.session.query(Users,Wife)
+						返回值:
+							返回一个Query对象，类型为BaseQuery
+				2.查询执行函数
+					作用:在query的基础上得到最终的查询结果
+					语法:
+						db.session.query(XXX).查询执行函数()
+					函数:
+						1.all()
+							以列表的方式返回所有数据
+						2.first()
+							以实体对象的方式返回第一条数据
+							没有查询到数据则返回None
+						3.first_or_404()
+							效果同上
+							没查询到结果则响应404
+						4.count()
+							返回查询结果的数量
+				3.查询过滤器函数
+					作用:在db.session.query()追加条件
+					语法:db.session.query(XX).过滤器函数().执行函数()
+					函数:
+						1.filter()
+							各种各样的查询条件均可实现
+						2.filter_by()
+							作用:只做等值条件判断
+							语法:
+								db.session.query(xxx)
+									.filter_by(属性=值).all()
+							示例:
+								查询Users中id=2的用户的信息
+								db.session.query(Users).filter_by(id=2).first()
+						3.limit()
+							作用:获取限定行数
+							示例:获取Users中的前2条数据
+								db.session.query(Users).limit(2).all()
+						4.offset()
+							指定结果的偏移量
+							示例:获取Users中跳过前2条数据的剩余数据
+								db.session.query(Users).offset(2)	
+			2.基于 实体类 进行查询
+
+
+
+
+select * from users limit 3,5
+
+

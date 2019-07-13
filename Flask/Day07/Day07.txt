@@ -1,0 +1,133 @@
+1.关系映射
+	1.一对多映射
+		1.设置一对多映射
+			1.在"多"实体类中增加外键,引用"一"类的主键
+			2.在"一"类中增加 关联属性 和 反向引用关系属性
+		2.示例
+			class Course(db.Model):
+				xxx xxx
+				teachers = db.relationship(
+					"Teacher",
+					backref="course" # 等同于teacher对象中都有一个属性叫course
+					lazy = "dynamic"
+				)
+
+			class Teacher(db.Model):
+				xxx xxx
+				course_id = db.Column(db.TYPE,db.ForeignKey('course.id'))
+		3.关联数据的查询
+			1.通过"一"的对象找关联的"多"的对象们
+				示例:当得到一门Course的信息后，如何获取对应的所有的Teacher们
+				解决:通过 关联属性 来表示对应的类型数据的查询对象
+				course=Course.query.fitler_by(id=1).first()
+				#查询出course对象所对应的所有的teachen们
+				teachers = course.teachers.all()
+			2.通过"多"的对象找关联的"一"的对象
+				解决:通过反向引用关系属性
+				示例:查找 祁老师 所教授的课程
+				tea = Teacher.query.filter_by(tname='祁老师')
+				cour = tea.course
+	2.一对一映射
+		1.什么是一对一
+			A表中的一条数据只能关联到B表的一条数据上
+			B表中的一条数据只能关联到A表的一条数据上
+		2.一对一在数据中的实现
+			在关联的两张表中的任意一张表中:
+				1.增加外键,并引用另一张表的主键
+				2.并且要增加唯一约束
+		3.在ORM中实现
+			1.在任意一个实体类增加外键以及唯一约束
+				外键列名 = db.Column(
+					db.TYPE,
+					db.ForeignKey('主表.主键'),
+					unique = True
+				)
+
+				demo:
+					创建Teacher与Wife之间的一对一关系
+					Wife中增加外键列 - teacher_id 
+			2.关联属性 和 反向引用关系属性
+				在关联的两个类中的另一个类中增加:
+				  属性名 = db.relationship(
+						"关联的实体类名",
+						backref="反向引用关系属性名",
+						uselist=False
+					)
+
+					uselist:设置为False,表示关联属性是一个标量而并非一个列表
+	3.多对多映射
+		1.什么是多对多
+			A表中的一条数据能关联到B表中的多条数据上
+			B表中的一条数据能关联到A表中的多条数据上
+		2.在数据库中的实现
+			依靠第三张关联表的方式来实现
+		3.在ORM中的实现
+			1.创建第三张表(类)
+			2.关联属性 和 反向引用关系属性
+				在关联的两个类中的任意一个类中增加:
+				属性名 = db.relationship(
+					"另一个类名",
+					secondary="第三张关联表表名",
+					lazy="dynamic",
+					backref=db.backref(
+						"反向引用关系属性名",
+						lazy="dynamic"
+					)
+				)
+
+
+lazy:指定如何加载相关的记录们
+	Course(一) Teacher(多)
+	class Course(db.Model):
+		xxx xxx
+		teachers = db.relationship(
+			"Teacher",
+			backref="course",
+			lazy="dynamic"
+		)
+
+		lazy取值:
+			1.select
+				首次访问属性时就加载相关数据
+			2.immediate
+				只要用到关联属性就马上加载一次关联数据
+			3.subquery
+				功能同上
+			4.noload
+				永不加载关联数据
+			5.dynamic
+				不加载记录，但提供记录的查询
+
+
+
+查询每名student所选修的course信息
+select sname,cname
+from student as s
+inner join student_course as sc
+on s.id = sc.student_id
+inner join course as c
+on sc.course_id = c.id
+
+select sname,cname 
+from 
+student as s,student_course as sc , course as c
+where s.id = sc.student_id and c.id = sc.couse_id
+
+
+
+错误:
+	Can't locate revision identified by a123456
+	....not up to date
+  解决方案:
+		1.删除项目中的migrateions/versions/目录中的所有内容
+		2.清空系统表 alembic_version 中的所有记录
+		3.重新生成中间文件并同步回数据库
+
+
+
+
+
+
+
+
+

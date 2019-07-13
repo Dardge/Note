@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table width="600" border="1">
+        <tr>
+            <th>用户名</th>
+            <th>年龄</th>
+            <th>邮箱</th>
+            <th>生日</th>
+            <th>激活</th>
+        </tr>
+        {% for u in params.users %}
+            <tr>
+                <td>{{u.username}}</td>
+                <td>{{u.age}}</td>
+                <td>{{u.email}}</td>
+                <td>{{u.birthday}}</td>
+                <td>
+                    {% if u.isActive %}
+                        是
+                    {% else %}
+                        否
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="5">
+                <a href="/07-page?currentPage=1">首页</a>
+                <a href="/07-page?currentPage={{params.prevPage}}">上一页</a>
+                <a href="/07-page?currentPage={{params.nextPage}}">下一页</a>
+                <a href="/07-page?currentPage={{params.lastPage}}">尾页</a>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
