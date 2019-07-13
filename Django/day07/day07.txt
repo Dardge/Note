@@ -1,0 +1,29 @@
+﻿中间件的执行流程
+请求到达中间件后，先按照顺序正序执行每个注册过的中间件的process_request方法，如果return值为None就依次执行，
+如果有返回值，就不会再继续执行后续的process_request函数，而是去执行对应的中间件的process_response方法，
+将HttpResponse对象返回给浏览器
+
+process_request执行完之后，匹配路由，然后找到要执行的视图，先执行中间件的process_view，如果process_view返回
+None，按照顺序继续执行，所有process_view执行完毕后再执行视图函数，如果中间件3返回HttpResponse，从最后一个中
+间件的process_response方法开始倒叙执行
+
+
+
+
+
+MD1里的process_request
+<WSGIRequest: GET '/demo/show/'>
+MD2里的process_request
+<WSGIRequest: GET '/demo/show/'>
+********************************************************************************
+MD1中的process_view
+<function show_view at 0x00000222E9B477B8> show_view
+################################################################################
+MD2中的process_view
+<function show_view at 0x00000222E9B477B8> show_view
+demo中的show_view视图
+MD2中的process_template_response
+MD1中的process_template_response
+in demo/render
+MD2里的process_response
+MD1里的process_response

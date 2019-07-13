@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>otm</title>
+</head>
+<body>
+<h1>正向查询 Book -->Publisher</h1>
+{% for b in book_list %}
+<h3>书名：{{b.title}}---出版社：{{b.publisher.name}}</h3>
+{% endfor %}
+<h2>反向查询</h2>
+<h3>出版社：{{pub_list.0.name}}----出版的所有书籍
+    {% for b in book_list %}
+    《{{b.title}}》
+    {% endfor %}
+</h3>
+</body>
+</html>

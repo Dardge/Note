@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>detail</title>
+</head>
+<body>
+<form action="{% url 'vote' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h1>问题：{{quest.quest}}</h1>
+    {% for a in answer_list %}
+    <p style="color: #0e90d2">
+        <input type="radio" name="answer" value="{{a.id}}">
+        答案{{ forloop.counter }}：{{a.answer}}--票数：{{a.total}}
+        </input>
+    </p>
+    {% endfor %}
+    <input type="submit" value="提交">
+</form>
+</body>
+</html>

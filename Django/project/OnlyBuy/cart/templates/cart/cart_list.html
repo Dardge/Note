@@ -1,0 +1,129 @@
+{% extends 'index.html' %}
+<meta charset="UTF-8">
+<title>这是购物车列表</title>
+{% block static %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="/static/css/index.css">
+<link rel="stylesheet" href="/static/css/cart.css"/>
+<link rel="icon" href="/static/images/index/py.ico">
+<script src="/static/js/init.js"></script>
+{% endblock %}
+{% block content %}
+<!-- nav主导航-->
+<div class="modal" style="display:none">
+    <div class="modal_dialog">
+        <div class="modal_header">
+            删除提醒
+        </div>
+        <div class="modal_information">
+            <img src="/images/model/model_img2.png" alt=""/>
+            <span>确定删除您的这个宝贝吗？</span>
+        </div>
+        <div class="yes"><span>删除</span></div>
+        <div class="no"><span>不删除</span></div>
+    </div>
+</div>
+<div class="modalNo" style="display:none">
+    <div class="modal_dialog">
+        <div class="modal_header">
+            删除提示
+            <img src="/images/model/model_img1.png" alt="" class="rt close"/>
+        </div>
+        <div class="modal_information">
+            <img src="/images/model/model_img2.png" alt=""/>
+            <span>请选择商品</span>
+        </div>
+    </div>
+</div>
+
+
+<div class="cart_infos">
+    <form action="/cart/settlement/" method="post">
+        {% csrf_token %}
+        <section id="section">
+            <div id="title">
+                <b>购物车</b>
+                <span>{{ ms }}</span>
+                <p>
+                    已选<span class="total color">0</span>件商品<span class="interval"></span>合计(不含运费):<span
+                        class="totalPrices color susum">0.00</span><span
+                        class="unit color">元</span>
+                </p>
+            </div>
+            <div id="box">
+                <div id="content_box">
+                    <div class="imfor_top">
+                        <div class="check_top">
+                            <div class="all">
+                                    <span class="normal">
+                                        <img src="/static/images/cart/product_normal.png" alt=""/>
+                                    </span> <input type="hidden" name="" value="">全选
+                            </div>
+                        </div>
+                        <div class="pudc_top">商品</div>
+                        <div class="pices_top">单价(元)</div>
+                        <div class="num_top">数量</div>
+                        <div class="totle_top">金额</div>
+                        <div class="del_top">操作</div>
+                    </div>
+
+                    <!-- 购物车商品 -->
+                    {% for item in cart_items %}
+                    <div class="imfor" style="width:1005px">
+                        <div class="check">
+                            <div class="Each">
+                                <input type="checkbox" name="{{ item.id }}settlement" value="true" class="lf">
+                                <input type="hidden" name="" value="">
+                            </div>
+                        </div>
+                        <div class="pudc">
+                            <div class="pudc_information" id="pudcId3">
+
+                                <img src="{{item.head_image}}" class="lf" width="55pix" height="50px"/>
+                                <input type="hidden" name="{{ item.id }}" value="{{ item.id }}">
+                                <span class="des lf">
+                                        {{item.goods_spec.goods.title}}
+                                        <input type="hidden" name="" value="">
+                                    </span>
+                                <p class="col lf">
+                                    <span>{{item.goods_spec.goods.spec_name}}:</span>
+                                    <span class="color_des">{{item.goods_spec.spec_info}} <input type="hidden" name=""
+                                                                                                 value=""></span>
+                                </p>
+
+                            </div>
+                        </div>
+                        <div class="pices">
+                            <p class="pices_des">皮粉专享价</p>
+                            <p class="pices_information"><b>￥</b><span> {{item.goods_spec.price}} <input type="hidden"
+                                                                                                         name=""
+                                                                                                         value=""></span>
+                            </p>
+                        </div>
+                        <div class="num">
+                            <span class="reduc">&nbsp;-&nbsp;</span>
+                            <input type="text" name="{{ item.id }}cunt" value="{{item.count}}">
+                            <span class="add">&nbsp;+&nbsp;</span></div>
+                        <div class="totle">
+                            <span>￥</span>
+                            <span class="totle_information">{{item.total}}</span>
+                        </div>
+                        <div class="del">
+                            <a href="/cart/delete/{{item.id}}/" class="del_d">删除</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+                <div class="foot">
+                    <input class="foot_cash" type="submit" value="去结算">
+                </div>
+            </div>
+        </section>
+    </form>
+</div>
+
+{% endblock %}
+{% block script %}
+{% endblock %}

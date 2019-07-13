@@ -1,0 +1,14 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>upload</title>
+</head>
+<body>
+<form action="/demo/upload_view/" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="myfile">
+    <button>上传</button>
+</form>
+</body>
+</html>

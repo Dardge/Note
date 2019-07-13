@@ -1,0 +1,41 @@
+﻿
+1.安装Django
+    sudo pip3 install django
+    sudo pip3 install django==1.11.8 指定版本
+
+2.离线下载
+    下载安装包
+    Django-2.2.2.tar.gz
+    #tat -xvf Django-2.2.2.tar.gz
+    #cd Django-2.2.2
+    #sudo python3 setup.py install
+3.使用wheel安装
+    下载
+    #pip3 download -d 路径
+    安装
+    pip3 install Django-2.2.2.whl
+
+    卸载
+    pip3 uninstall Django
+
+    使用Django框架
+    1.创建练习项目
+    django-admin startproject mywebsite1
+
+    URL介绍
+    http://www.tmooc.cn/live
+
+    路由
+    URL中不看域名的部分
+    url(r'^admin/', admin.site.urls),
+    url(regex,views,kwargs=None,name=None)
+    1.regex:字符串类型 匹配请求路径 通常为正则表达式
+    2.views:表示路径队对应的视图函数
+    3.kwargs:向视图传递参数
+
+    使用后踢管理系统
+    将django准备的数据库内容迁移本地数据库
+    python3 manage.py migrate
+
+    正则表达式的命名分组(?P<name>xxx)
+    http://127.0.0.1:8000/students/shibw/20

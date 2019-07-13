@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login_form</title>
+    <style>
+        .from-control {
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+<body>
+<!--action为空默认提交到本页面-->
+<form action="" method="post">
+    {% csrf_token %}
+    <table>
+        {{login_form.as_table}}
+    </table>
+    <input type="submit" value="登陆">
+    <h1 style="color: red">{{text}}</h1>
+</form>
+</body>
+</html>

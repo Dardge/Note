@@ -1,0 +1,303 @@
+﻿/*1.顶部*/
+#top {
+    height: 50px;
+}
+
+/*左中右浮动*/
+#logo {
+    float: left;
+    width: 168px;
+    border-radius: 10px;
+}
+
+.search {
+    float: left;
+    margin-left: 115px;
+    position: relative;
+}
+
+.search input {
+    width: 330px;
+    height: 36px;
+    border: 1px solid #999;
+    background: #f5f5f5;
+    padding-left: 10px;
+    padding-right: 50px;
+    border-radius: 19px;
+}
+
+.search img {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#top ul {
+    float: right;
+    margin-top: 16px;
+}
+
+#top ul li {
+    float: left;
+    border-right: 1px solid #999;
+    /*固定元素的高度，统一边框的高度*/
+    height: 15px;
+    padding: 0 15px;
+}
+
+#top ul li img {
+    margin-top: -2.5px;
+}
+
+#top ul li:last-child {
+    border: none;
+}
+
+/*2.导航*/
+#nav {
+    margin: 15px 0;
+}
+
+#nav a {
+    font-size: 16px;
+    margin-right: 40px;
+}
+
+
+/*3.main*/
+#main {
+    margin: 15px;
+}
+
+/*顶部总数量*/
+#main {
+    margin: 15px 0;
+    /*设置最小高度内容尺寸高度>300时正常将main撑开显示，内容尺寸高度<300,按300显示*/
+    min-height: 300px;
+}
+
+#main > h2 {
+    font: 24px "微软雅黑";
+    color: #333;
+}
+
+#main > h2 > p {
+    float: right;
+    color: #999;
+    font-size: 12px;
+}
+
+#main .total-num, #main .total-price {
+    color: #997679;
+    font-size: 14px;
+    padding: 0 10px;
+    font-weight: bold;
+}
+
+/*购物车标题*/
+#main .title {
+    height: 36px;
+    border-top: 1px solid #333;
+    background: #e6e6e5;
+    box-shadow: 0 2px 5px gray; /*加阴影*/
+    line-height: 36px;
+    text-align: center;
+}
+
+#main p {
+    color: #333;
+    float: left;
+    box-sizing: border-box; /*盒模型*/
+}
+
+.check {
+    width: 52px;
+}
+
+.gname {
+    width: 380px;
+}
+
+.gprice {
+    width: 152px;
+}
+
+.gcount {
+    width: 150px;
+}
+
+.gsum {
+    width: 130px;
+}
+
+.action {
+    width: 126px;
+}
+
+.check img {
+    vertical-align: middle;
+}
+
+/*商品展示*/
+.content {
+    margin-top: 20px;
+}
+
+.item {
+    height: 115px;
+    background: #fff;
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #999;
+    margin-bottom: 10px;
+}
+
+.item > p {
+    height: 115px;
+    border-right: 1px solid #333;
+}
+
+.item .check, .item .gsum, .item .action {
+    text-align: center;
+    line-height: 115px;
+    border: none;
+}
+
+.item .gsum {
+    border-right: 1px solid #333;
+}
+
+.item .gname span {
+    display: block; /*变为行内块元素*/
+    margin-top: 15px;
+}
+
+.item .gname img {
+    float: left;
+    width: 84px;
+    height: 84px;
+    margin: 15px 20px;
+}
+
+.item .gprice {
+    text-align: center;
+}
+
+.item .gprice b {
+    display: block;
+    color: #997679;
+    margin-top: 35px;
+    margin-bottom: 10px;
+}
+
+.item .gcount a {
+    color: #333;
+    float: left;
+    width: 26px;
+    height: 26px;
+    text-align: center;
+    line-height: 26px;
+    border: 1px solid gray;
+    background: #e8e8e8;
+    margin-top: 40px;
+}
+
+.item .gcount input {
+    float: left;
+    width: 26px;
+    height: 26px;
+    border: none;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    padding: 0;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.item .gcount .minus {
+    margin-left: 35px;
+}
+
+/*结算工具栏*/
+#main {
+    position: relative;
+    padding-bottom: 80px;
+}
+
+#main .tool {
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    background: orange;
+    bottom: 0;
+    left: 0;
+}
+
+#main .tool button {
+    float: right;
+    width: 120px;
+    height: 50px;
+    border: 0;
+    background: red;
+    color: #fff;
+    /*表单控件默认字体大小为13.3*/
+    font-size: 26px;
+}
+
+
+/*7.footer*/
+#footer {
+    overflow: hidden;
+    margin: 30px 0;
+}
+
+#footer div {
+    float: left;
+    margin: 0 95px;
+}
+
+#footer > div > p {
+    text-align: center;
+}
+
+/*8.bottom*/
+#bottom .download {
+    float: right;
+    width: 260px;
+}
+
+#bottom .download img, #bottom .download p {
+    float: right;
+    width: 124px;
+    color: #333;
+    font-size: 14px;
+    text-align: center;
+}
+
+#bottom .download .erweima {
+    width: 100px;
+    margin-left: 10px;
+}
+
+#bottom .download .android {
+    margin: 5px 0;
+}
+
+#bottom .footerLoge {
+    width: 168px;
+    border-radius: 10px;
+}
+
+#bottom > img {
+    width: 650px;
+}
+
+#bottom > p {
+    color: #333;
+    text-align: center;
+}
+
+#bottom {
+    margin: 20px 0;
+}

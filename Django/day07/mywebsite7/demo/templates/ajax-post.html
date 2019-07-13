@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>POST请求</title>
+    <script src="/static/js/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $('#btnPost').click(function () {
+                var data = {
+                    uname: 'wangwc',
+                    //使用post请求时 需要向服务器传递一个名为csrfmiddlewaretoken的参数，
+                    // 值为当前网页上name='csrfmiddlewaretoken'的值(.val())
+                    csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
+                };
+                $.post('/demo/post_server/', data, function (data) {
+                    $('#show').html(data)
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<button id="btnPost">AJAX_POST请求</button>
+<div id="show"></div>
+<form action="/demo/post_server/" method="post">
+    {% csrf_token %}
+    用户名：<input type="text" name="uname">
+    <button>普通提交</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>var</title>
+</head>
+<body>
+<!--获取所有变量并展示-->
+<h3>{{ str }}</h3>
+<h3>{{ num }}</h3>
+<h3>{{ list }}</h3>
+<h3>{{ tup }}</h3>
+<h3>{{ dict }}</h3>
+<h3>{{ tup.1 }}
+    {{ say }}
+    {{ dog.name }}
+    {{ list.1 }}
+    {{ dict.BJ }}
+    {{ dog.eat }}
+</h3>
+<hr>
+<h1>使用for循环展示list</h1>
+{% for item in list %}
+<h3>{{item}}</h3>
+{% endfor %}
+
+<select>
+    {% for item2 in tup %}
+    <!--counter0表示从0开始算循环次数-->
+    <option value="{{ forloop.counter0 }}">{{item2}}</option>
+    {% endfor %}
+</select>
+<h1>使用for循环加if语句</h1>
+{% for c in tup %}
+<p
+        {% if forloop.first %}
+        style="color:red"
+        {% elif forloop.last %}
+        style="color:blue"
+        {% endif %}>
+    <span>{{ c }}</span>
+</p>
+{% endfor %}
+<hr>
+{%for stu in students%}
+<p>stu:{{stu}}</p>
+{%empty%}
+<p>没有得到stu信息</p>
+{%endfor%}
+
+{# <h1>这段代码不会生成</h1> #}
+</body>
+</html>

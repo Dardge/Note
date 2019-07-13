@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模板过滤器演示</title>
+</head>
+<body>
+<h1>add过滤器：将字符串和字母整数链接</h1>
+<h3>{{ 1|add:2 }}</h3>
+<h3>{{ '3'|add:2 }}</h3>
+<h3>{{ 'a'|add:2 }}</h3>
+<hr>
+<h3>{{ 'hello word'|cut:' ' }}</h3>
+<h3>{{ 'hello word'|cut:'h' }}</h3>
+<h3>{{ 123456|cut:'1' }}</h3>
+<hr>
+<h3>{{time}}</h3>
+<h3>{{time|date:'Y/m/d g:i:s'}}</h3>
+<hr>
+<h3>{{'12345'|last}}</h3>
+<h3>{{list|first}}</h3>
+<hr>
+<h3>{{1.445343|floatformat}}</h3>
+<h3>{{1.545|floatformat:2}}</h3>
+<h3>{{1.555|floatformat}}</h3>
+<hr>
+<h3>{{123456|length}}</h3>
+<h3>{{'123456'|length}}</h3>
+<h3>{{list|length}}</h3>
+<h3>{{list|length_is:5}}</h3>
+<hr>
+<h3>{{'abcd'|upper}}</h3>
+<h3>{{'ABCD'|lower}}</h3>
+<h3>{{'ABCD'|center:50}}</h3>
+<hr>
+<h3>{{dict}}</h3>
+<h3>{{dict|default:'默认值'}}</h3>
+<hr>
+<h3>{{'1234567890-'|truncatechars:6}}</h3>
+
+
+
+
+<div style="height: 400px;"></div>
+</body>
+</html>

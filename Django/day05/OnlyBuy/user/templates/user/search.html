@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索历史</title>
+</head>
+<body>
+<form action="">
+    <input type="text" name="kw">
+    <button>搜索</button>
+</form>
+<div>
+    <span>搜索历史</span>
+    {% for kw in kw_list %}
+    <a href="/user/search/?kw={{kw}}">{{kw}}</a>
+    {% endfor %}
+</div>
+<h1 style="color: red">{{detail}}</h1>
+</body>
+</html>

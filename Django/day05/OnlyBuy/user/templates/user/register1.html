@@ -1,0 +1,25 @@
+﻿﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+</head>
+<body>
+<!--<form action="" method="post">-->
+<!--{% csrf_token %}-->
+<!--<p><label for="uname">用户名：</label><input type="text" name="uname" id="uname"></p>-->
+<!--<p>密码：<input type="password" name="upwd"></p>-->
+<!--<p>手机：<input type="text" name="uphone"></p>-->
+<!--<p>邮箱：<input type="email" name="uemail"></p>-->
+<!--<p>状态：<input type="checkbox" name="isActive" checked></p>-->
+<!--<input type="submit" value="注册">-->
+<!--</form>-->
+<form action="" method="post">
+    {% csrf_token %}
+    <table>
+        {{form.as_table}}
+    </table>
+    <input type="submit" value="注册">
+</form>
+</body>
+</html>

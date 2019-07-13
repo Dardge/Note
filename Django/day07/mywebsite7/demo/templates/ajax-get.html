@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GET请求</title>
+    <script src="/static/js/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $('#btnGet').click(function () {
+                var params = {
+                    uname: 'wangwc',
+                    uage: 30
+                };
+                $.get('/demo/get_server/', params, function (data) {
+                    $('#show').html(data)
+                })
+            });
+        })
+    </script>
+</head>
+<body>
+<button id="btnGet">AJAX GET请求</button>
+<div id="show"></div>
+</body>
+</html>

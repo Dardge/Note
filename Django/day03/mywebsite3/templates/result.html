@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>result</title>
+</head>
+<body>
+<h3>{{quest.quest}}</h3>
+<ul style="list-style: none">
+    <li>您的投票结果：{{target_answer.answer}}-----现有票数：{{target_answer.total}}</li>
+    {% for a in answer_list %}
+    <li
+            {% if forloop.first %}
+            style="color: red"
+            {% endif %}
+    >{{a.answer}}-----票数:{{a.total}}
+    </li>
+    {% endfor %}
+</ul>
+</body>
+</html>

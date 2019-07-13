@@ -1,0 +1,12 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票</title>
+</head>
+<body>
+{% for q in quest_list %}
+<a href="/poll/{{q.id}}">{{q}}</a>
+{% endfor %}
+</body>
+</html>

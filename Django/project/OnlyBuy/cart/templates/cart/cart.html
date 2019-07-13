@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>前端页面</title>
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/cart.css">
+    <script src="/static/js/jquery-1.11.3.js"></script>
+    <script src="/static/js/cart.js"></script>
+</head>
+<body>
+<!--外部容器-->
+<div id="box">
+    <!--1.页面顶部-->
+    <div id="top">
+        <!--1.1左列logo-->
+        <img src="/static/images/header/logo.png" id="logo">
+        <!--1.2中间搜索框-->
+        <div class="search">
+            <input type="text">
+            <img src="/static/images/header/search.png">
+        </div>
+        <!--1.3右列导航-->
+        <ul>
+            <li><img src="/static/images/header/care.png"></li>
+            <li><img src="/static/images/header/order.png"></li>
+            <li><img src="/static/images/header/shop_car.png"></li>
+            <li><a href="http://www.baidu.com">帮助</a></li>
+            {% if request.user.username %}
+            <li>欢迎：{{request.user}} <a href="/user/logout">注销</a></li>
+            {% else %}
+            <li><a href="/user/login">登陆</a></li>
+            {% endif %}
+
+        </ul>
+    </div>
+    <!--2.导航-->
+    <div id="nav">
+        <a href="/">首页</a>
+        <a href="">私人定制</a>
+    </div>
+    <!--6.主体-->
+    <div id="main">
+        <h2>
+            购物车
+            <p>
+                已选择：<span class="total-num">0</span>件商品
+                共计：<span class="total-price">0</span>元
+            </p>
+        </h2>
+        <!--购物车标识-->
+        <div class="title">
+            <p>
+                <img src="/static/images/cart/product_normal.png" class="checkAll">全选
+            </p>
+            <p class="gname">商品</p>
+            <p class="gprice">单价</p>
+            <p class="gcount">数量</p>
+            <p class="gsum">金额</p>
+            <p class="action">操作</p>
+        </div>
+        <!--购物车商品展示-->
+        <div class="content">
+            {% for item in cart_items %}
+            <div class="item">
+                <p class="check">
+                    <img src="/static/images/cart/product_normal.png" class="checkImg">选择
+                </p>
+                <p class="gname">
+                    <img src="{{item.head_image}}">
+                    <span>{{item.goods_spec.goods.goods_type}}</span>
+                    <span>规格：{{item.goods_spec}}</span>
+                </p>
+                <p class="gprice">
+                    <b>皮粉专享价</b>
+                    <span>￥{{item.goods_spec.price}}</span>
+                </p>
+                <p class="gcount">
+                    <a href="javascript:void (0)" class="minus">-</a>
+                    <input type="text" value="{{item.count}}">
+                    <a href="javascript:void (0)" class="add">+</a>
+                </p>
+                <p class="gsum">
+                    <b>￥{{item.total}}</b>
+                </p>
+                <p class="action"><a href="/cart/delete/{{item.id}}/" style="color: red">移除</a></p>
+
+            </div>
+            {% endfor %}
+            <!--底部工具栏-->
+            <div class="tool">
+                <button>去结算</button>
+            </div>
+        </div>
+    </div>
+    <!--7.底部-->
+    <div id="footer">
+        <div>
+            <img src="/static/images/footer/icon1.png">
+            <p>会员权益</p>
+        </div>
+        <div>
+            <img src="/static/images/footer/icon2.png">
+            <p>会员权益</p>
+        </div>
+        <div>
+            <img src="/static/images/footer/icon3.png">
+            <p>会员权益</p>
+        </div>
+        <div>
+            <img src="/static/images/footer/icon4.png">
+            <p>会员权益</p>
+        </div>
+    </div>
+    <!--8.公用底部-->
+    <div id="bottom">
+        <!--右侧结构-->
+        <div class="download">
+            <img src="/static/images/footer/erweima.png" class="erweima">
+            <p>皮爷の商城客户端</p>
+            <img src="/static/images/footer/android.png" class="android">
+            <img src="/static/images/footer/ios.png">
+        </div>
+        <!--正常元素-->
+        <img src="/static/images/footer/logo.png" class="footerLoge">
+        <img src="/static/images/footer/footerFont.png">
+        <p>版权所有©：皮爷科技</p>
+    </div>
+</div>
+</body>
+</html>

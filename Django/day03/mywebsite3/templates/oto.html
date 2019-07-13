@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>展示一对一的查询方式</title>
+</head>
+<body>
+<h1>正向查询 Wife-->Author </h1>
+{% for w in wife_list %}
+<h3>妻子姓名：{{w.name}}</h3>
+<h3>作者姓名：{{w.author.name}}</h3>
+{% endfor %}
+<h1>反向查询</h1>
+{% for a in author_list %}
+<h3>作者姓名：{{a.name}}</h3>
+<h3>妻子姓名：{{a.wife.name}}</h3>
+{% endfor %}
+</body>
+</html>

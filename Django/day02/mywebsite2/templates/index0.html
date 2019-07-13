@@ -1,0 +1,14 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>first</title>
+</head>
+<body>
+<h1>这是我的第一个模板页面</h1>
+<h1>{{ name }}</h1>
+<a href="/cart/child">子模板页面</a>
+<!--通过别名实现地址的反响解析-->
+<a href="{% url 'base' %}">父模板页面</a>
+</body>
+</html>

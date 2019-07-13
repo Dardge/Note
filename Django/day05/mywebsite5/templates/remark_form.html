@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>解析form对象</title>
+</head>
+<body>
+<h1>手动解析</h1>
+<form action="">
+    {% for field in form %}
+    <p>
+        <span>{{field.label}}</span>
+        {{field}}
+    </p>
+    {% endfor %}
+    <button>提交</button>
+</form>
+<h1>自动解析---&lt;p&gt;</h1>
+{{form.as_p}}
+<ul>
+    <h1>自动解析---&lt;ul&gt;:需要手动添加ul标签</h1>
+    {{form.as_ul}}
+</ul>
+<table>
+    <h1>自动解析---&lt;table&gt;:需要手动添加table标签</h1>
+    {{form.as_table}}
+</table>
+</body>
+</html>
