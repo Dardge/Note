@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="/static/js/jquery-1.11.3.js"></script>
+  <script>
+
+    function abc(data){
+      for(var i=0;i<data.length;i++){
+        console.log("用户名:"+data[i].uname);
+        console.log("密码:"+data[i].upwd);
+      }
+    }
+
+    $(function(){
+      $("#btnCross").click(function(){
+        //访问:http://localhost:5000/12-cross
+        //请求:http://127.0.0.1:5000/12-server
+        //1.动态创建<script>元素
+        var script = document.createElement("script");
+        //2.为script元素的type,src属性赋值,其中src属性是请求地址
+        script.type="text/javascript";
+        script.src="http://127.0.0.1:5000/12-server?callback=abc";
+        //服务器端响应:return "console.log('这是http://127.0.0.1:5000/12-server响应回来的内容');"
+        //3.将script元素加载到网页上即可(相当于是触发请求操作)
+        $("body").append(script);
+      });
+
+      $("#btnCrossJQ").click(function(){
+        $.ajax({
+          url:"http://127.0.0.1:5000/12-server",
+          type:"get",
+          dataType:"jsonp",
+          success:function(data){
+            for(var i=0;i<data.length;i++){
+              var u = data[i];
+              console.log("姓名:"+u.uname+",邮箱:"+u.uemail);
+            }
+          }
+        });
+      });
+    });
+
+  </script>
+</head>
+<body>
+  <button id="btnCross">跨域请求</button>
+  <button id="btnCrossJQ">跨域请求(JQ)</button>
+</body>
+</html>

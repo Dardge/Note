@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var jsonStr = '{"uname":"lvze","uage":30}';
+    //将jsonStr转换为JS对象
+    var obj = JSON.parse(jsonStr);
+    console.log(obj.uname);
+    console.log(obj.uage);
+
+    /**
+     * 使用JSON串来表示多个对象
+     * 对象1: uname:Mrqi,uage:26
+     * 对象2: uname:MrLv,uage:30
+     * 对象3: uname:MrWei,uage:40
+     * 将以上JSON转换为JS数组,再循环遍历进行解析
+     * 输出:
+     *    姓名:xxxx,年龄:xxx
+     *    姓名:xxxx,年龄:xxx
+     *    姓名:xxxx,年龄:xxx
+     *
+     * */
+    console.log("==================");
+    var arrStr = '[{"uname":"MrQi","uage":26},{"uname":"MrLv","uage":30},{"uname":"MrWei","uage":40}]';
+    var arr = JSON.parse(arrStr);
+    for(var i=0;i<arr.length;i++){
+        console.log("姓名:"+arr[i].uname+",年龄:"+arr[i].uage);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/jquery-1.11.3.js"></script>
+    <script>
+
+        /**
+         * 检查用户名称是否存在,并将提示信息显示在span上
+         * return : 返回用户名称是否存在的结果,true,表示用户名称已存在,false,表示用户名称不存在
+         * */
+        function checkuname(){
+            var ret = false;
+            var xhr = createXhr();
+            var url = "/03-checkuname?uname="+$("#uname").val();
+            xhr.open('get',url,false);
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState==4&&xhr.status==200){
+                    if(xhr.responseText=="1"){
+                        $("#uname-tip").html("用户名称已存在");
+                        ret = true;//将ret的值更改为true表示用户名已存在
+                        alert("在checkuname中ret的值为:"+ret);
+                    }else{
+                        $("#uname-tip").html("通过");
+                    }
+                }
+            }
+            xhr.send(null);
+            return ret;
+        }
+
+        $(function(){
+            /**
+             * 为#uname绑定失去焦点事件
+             * */
+            $("#uname").blur(function(){
+                checkuname();
+            });
+
+            $("#btnReg").click(function(){
+                var ret = checkuname();
+                alert("ret的返回值:"+ret);
+                //先判断用户名是否存在
+                if(ret){
+                    alert("用户名称已存在");
+                }else{
+                    alert("可以注册");
+                    var xhr = createXhr();
+                    xhr.open("post","/03-reg",true);
+                    xhr.onreadystatechange = function(){
+                        if(xhr.readyState==4 && xhr.status == 200){
+                            alert(xhr.responseText);
+                        }
+                    }
+                    xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+                    var uname=$("#uname").val();
+                    var upwd =$("#upwd").val();
+                    var uemail=$("#uemail").val();
+                    var params = "uname="+uname+"&upwd="+upwd+"&uemail="+uemail;
+                    xhr.send(params);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <p>
+        用户名:
+        <input type="text" id="uname">
+        <span id="uname-tip"></span>
+    </p>
+    <p>
+        密码:
+        <input type="password" id="upwd">
+    </p>
+    <p>
+        邮箱:
+        <input type="email" id="uemail">
+    </p>
+    <p>
+        <input type="button" id="btnReg" value="注册">
+    </p>
+</body>
+</html>

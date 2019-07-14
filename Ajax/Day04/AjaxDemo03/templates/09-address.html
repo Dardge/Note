@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="/static/js/jquery-1.11.3.js"></script>
+  <script>
+    function getProvince(){
+      $.ajax({
+        url:"/10-province",
+        type:"get",
+        async:false,
+        dataType:"json",
+        success:function(data){
+          var html = "";
+          for(var i=0;i<data.length;i++){
+            html+="<option value='"+data[i].id+"'>";
+            html+=data[i].pname;
+            html+="</option>";
+          }
+          $("#selProvince").html(html);
+        }
+      });
+    }
+
+    function getCity(pid){
+      $.ajax({
+        url:"/10-city",
+        type:"get",
+        async:true,
+        data:"pid="+pid,
+        dataType:"json",
+        success:function(data){
+          var html = "";
+          for(var i=0;i<data.length;i++){
+            html+="<option value='"+data[i].id+"'>";
+            html+=data[i].cname;
+            html+="</option>";
+          }
+          $("#selCity").html(html);
+        }
+      });
+    }
+
+    $(function(){
+      getProvince();
+      //为selProvince绑定change事件
+      $("#selProvince").change(function(){
+        getCity(this.value);
+      });
+
+      //网页加载时就根据默认选中的省份去加载对应的城市
+      getCity($("#selProvince").val());
+    });
+  </script>
+</head>
+<body>
+  <select id="selProvince"></select>
+  <select id="selCity"></select>
+</body>
+</html>

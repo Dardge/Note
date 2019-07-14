@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+ </head>
+ <body>
+  <script>
+	var user = {
+		uname : "Teacher Qi",
+		uage : 28,
+		ugender : "Male"
+	}
+
+	console.log("姓名:"+user.uname);
+	console.log("年龄:"+user.uage);
+	console.log("性别:"+user['ugender']);
+
+	console.log("多对象");
+	var users = [
+		{
+			uname:"LvzeMaria",
+			uage:30,
+			ugender:"Male"
+		},
+		{
+			uname:"MM.ZH",
+			uage:18,
+			ugender:"Female"
+		}
+	];
+
+	for(var i=0;i<users.length;i++){
+		var u = users[i];
+		console.log("姓名:"+u.uname);
+		console.log("年龄:"+u.uage);
+		console.log("性别:"+u.ugender);
+	}
+  </script>
+ </body>
+</html>

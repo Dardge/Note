@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/jquery-1.11.3.js"></script>
+    <script>
+        $(function(){
+            $("#btnGet").click(function(){
+                //1.创建xhr对象
+                var xhr = createXhr();
+                //2.创建请求
+                xhr.open('get','/01-server',true);
+                //3.设置回调函数
+                xhr.onreadystatechange=function(){
+                    if(xhr.readyState==4&&xhr.status==200){
+                        $("#show").html(xhr.responseText);
+                    }
+                }
+                //4.发送请求
+                xhr.send(null);
+            });
+        });
+    </script>
+</head>
+<body>
+    <a href="/01-server">非ajax请求</a>
+    <button id="btnGet">ajax请求</button>
+    <div id="show"></div>
+</body>
+</html>

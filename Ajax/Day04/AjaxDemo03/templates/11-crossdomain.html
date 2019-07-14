@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="/static/js/jquery-1.11.3.js"></script>
+  <script>
+    $(function(){
+      $("#btnCross").click(function(){
+        $.get(
+            "http://127.0.0.1:5000/11-server",
+            function(data){
+              $("#show").html(data);
+            }
+        );
+      });
+    });
+  </script>
+</head>
+<body>
+  <button id="btnCross">非同源访问</button>
+  <div id="show"></div>
+</body>
+</html>

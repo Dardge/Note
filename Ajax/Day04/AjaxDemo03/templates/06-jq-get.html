@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="/static/js/jquery-1.11.3.js"></script>
+  <script>
+    $(function () {
+      $("#btnGet").click(function () {
+        /**
+         * 方式1:没有参数
+         * */
+        /*$.get("/06-server",function(data){
+         //data表示的是服务器端响应回来的数据
+         $("#show").html(data);
+         });*/
+
+        /**
+         * 方式2:有请求参数的处理
+         * 向/06-server发送请求并传递两个参数到服务器
+         * 参数1: uname=TeacherQi
+         * 参数2: uage=26
+         * */
+        //var params = "uname=TeacherQi&uage=26";
+        /*var params = {
+         uname:"LvzeMaria",
+         uage:30
+         }
+         $.get('/06-server',params,function(data){
+         $("#show").html(data);
+         });*/
+
+        /**
+         * 方式3:响应回来的数据是JSON格式的
+         * */
+        $.get('/06-server', function (data) {
+          console.log("响应回来的数据:");
+          for (var i = 0; i < data.length; i++) {
+            console.log("姓名:" + data[i].uname + ",年龄:" + data[i].uage);
+          }
+        }, "json");
+      });
+    });
+  </script>
+</head>
+<body>
+<button id="btnGet">发送get请求</button>
+<div id="show"></div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/jquery-1.11.3.js"></script>
+    <script>
+        $(function(){
+            $("#btnShow").click(function(){
+                var xhr = createXhr();
+                xhr.open("get","/04-server",true);
+                xhr.onreadystatechange=function(){
+                    if(xhr.readyState==4&&xhr.status==200){
+                        //1.将responseText转换为JS数组
+                        var users = JSON.parse(xhr.responseText);
+                        //2.解析数组拼tr,td显示到#content中
+                        var html = "";
+                        for(var i=0;i<users.length;i++){
+                            html+="<tr>";
+                                html+="<td>"+users[i].uname+"</td>";
+                                html+="<td>"+users[i].upwd+"</td>";
+                                html+="<td>"+users[i].uemail+"</td>";
+                            html+="</tr>";
+                        }
+                        $("#content").html(html);
+                    }
+                }
+                xhr.send(null);
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <button id="btnShow">显示</button>
+    <table border="1" width="">
+        <tr>
+            <th>用户名</th>
+            <th>密码</th>
+            <th>邮箱</th>
+        </tr>
+        <tbody id="content"></tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,86 @@
+1.JSON
+	1.JSO
+		var obj = {
+			uname:"lvze",
+			uage:30
+		}
+	2.JSON
+		1.什么是JSON
+			JavaScript Object Notation
+			以JS对象的格式来表示出来的字符串
+		2.JSON表现
+			1.JSON表示单个对象
+				1.使用{}表示单个对象
+				2.在{}中使用key:value的格式来表示数据
+				3.多对key:value使用 , 来分割
+				4.key必须使用""引起来
+				5.value如果是字符串的话，也必须使用""引起来
+				示例:
+					var str = '{"uname":"lvze","uage":30}';
+			2.JSON表示一个数组
+				1.使用[]表示一个数组
+				2.数组中允许包含若干对象 或 字符串
+					示例1:
+						var arr='["祁老师","吕老师","魏老师"]';
+					示例2:
+						var arr='[{"uname":"MrQi","uage":26},{"uname":"MrLv","uage":30}]';
+		3.JSON串转换为JS对象
+			在前端中：
+				var JS对象 = JSON.parse(JSON串)
+		4.Python中的JSON处理
+			1.将对象转换成JSON串
+				1.元组，列表，字典 是可以转换为JSON串的
+				2.元组，列表，字典中 必须是 
+					1.字符串，数字
+					2.元组，列表，字典
+					
+			2.转换成JSON串
+				import json
+				jsonStr = json.dumps(元组|列表|字典)
+				return jsonStr
+2.jq 对 ajax 的支持
+	1. $obj.load(url,data,callback);
+			$obj:通过jq选择器获取到的页面元素
+			url:请求地址
+			data:发送到服务器端的参数数据
+			callback:请求成功时的回调
+
+  2.$.get(url,data,callback,type)
+	3.$.ajax()
+		语法: $.ajax({请求设置对象})
+			请求设置对象中的属性:
+				1.url : 字符串,表示异步请求的地址
+				2.type : 字符串,表示请求方式,'get'或'post'
+				3.data : 传递到服务器端的参数
+					1.字符串: "key=value&key=value"
+					2.JS对象: {key:"value",key:"value"}
+				4.async : 是否使用异步的方式发送请求
+					true:使用异步
+					false:使用同步
+				5.dataType:字符串,表示响应回来的数据的格式
+					1.'html'
+					2.'text'
+					3.'xml'
+					4.'json'
+					5.'script'
+					6.'jsonp':跨域时使用
+				6.success:请求成功时的回调函数
+					success:function(data){
+						data表示的是请求成功后的响应数据
+					}
+
+
+
+var xhr = createXhr();
+xhr.open("get",url,true);
+xhr.onreadystatechange=function(){
+	if(xhr.readyState==4&&xhr.status==200){
+		xhr.responseText;
+		//业务处理
+	}
+}
+xhr.send(null);
+
+
+
+

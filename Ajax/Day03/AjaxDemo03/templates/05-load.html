@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/jquery-1.11.3.js"></script>
+    <script>
+        $(function(){
+            $("#btnLoad").click(function(){
+                $("#show").load("/04-users");
+            });
+        });
+    </script>
+</head>
+<body>
+    <button id="btnLoad">load()</button>
+    <h2>使用load()加载/04-users到当前页面</h2>
+    <div id="show"></div>
+</body>
+</html>

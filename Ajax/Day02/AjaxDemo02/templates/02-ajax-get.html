@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/jquery-1.11.3.js"></script>
+    <script>
+        $(function(){
+            $("#btnGet").click(function(){
+                var xhr = createXhr();
+                var url = "/02-server?uname="+$("#uname").val();
+                xhr.open("get",url,true);
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState==4&&xhr.status==200){
+                        $("#show").html(xhr.responseText);
+                    }
+                }
+                xhr.send(null);
+            });
+        });
+    </script>
+</head>
+<body>
+    用户名: <input type="text" id="uname">
+    <button id="btnGet">请求</button>
+    <div id="show"></div>
+</body>
+</html>

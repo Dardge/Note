@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/jquery-1.11.3.js"></script>
+    <script>
+        $(function(){
+            $("#btnPost").click(function(){
+                //1.创建xhr
+                var xhr = createXhr();
+                //2.创建请求-post
+                xhr.open("post","/04-server",true);
+                //3.设置回调函数
+                xhr.onreadystatechange=function(){
+                    if(xhr.readyState==4&&xhr.status==200){
+                        $("#show").html(xhr.responseText);
+                    }
+                }
+
+                //4.设置Content-Type请求消息头
+                xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+                //5.发送请求-有参数
+                var uname = $("#uname").val();
+                xhr.send("uname="+uname);
+            });
+        });
+    </script>
+</head>
+<body>
+    <p>
+        姓名: <input type="text" id="uname">
+        <button id="btnPost">提交</button>
+    </p>
+    <div id="show">
+
+    </div>
+</body>
+</html>

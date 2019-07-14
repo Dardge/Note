@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="/static/js/jquery-1.11.3.js"></script>
+  <script>
+    function checkname(){
+      var ret = false; //假设用户名称不存在
+      $.ajax({
+        url:"/08-checkuname",
+        type:"get",
+        data:"uname="+$("#uname").val(),
+        async:false,
+        dataType:'json',
+        success:function(data){
+          if(data.status == 1){
+            ret = true; //将用户名设置为已存在的状态
+          }
+          $("#uname-tip").html(data.text);
+        }
+      });
+      return ret;
+    }
+
+    $(function(){
+      $("#uname").blur(function(){
+        checkname();
+      });
+
+      $("#btnReg").click(function(){
+        if(!checkname()){
+          $.ajax({
+            url:'/08-reguser',
+            type:'post',
+            data:{
+              uname:$("#uname").val(),
+              upwd:$("#upwd").val(),
+              uemail:$("#uemail").val()
+            },
+            dataType:'json',
+            success:function(data){
+              alert(data.text);
+              if(data.status == 1){
+                $("#uname").val('');
+                $("#upwd").val('');
+                $("#uemail").val('');
+                $("#uname-tip").html('');
+              }
+            }
+          });
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <p>
+    用户名:
+    <input type="text" id="uname">
+    <span id="uname-tip"></span>
+  </p>
+  <p>
+    密码:
+    <input type="password" id="upwd">
+  </p>
+  <p>
+    邮箱:
+    <input type="email" id="uemail">
+  </p>
+  <p>
+    <button id="btnReg">注册</button>
+  </p>
+</body>
+</html>
+
+
+
+
+
+
+

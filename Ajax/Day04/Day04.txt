@@ -1,0 +1,44 @@
+1.跨域(Cross Domain)
+	1.什么是跨域
+		HTTP协议中有一个策略 - "同源策略"
+			同源:多个地址，相同协议，相同域名，相同端口时被视为是"同源"
+
+			在HTTP中，只有同源地址才能发送ajax的请求，非同源时被拒绝的(<script> 和 <img>)
+
+			http://www.tedu.cn/a.html
+			http://www.tedu.cn/server
+			以上地址是同源的
+
+			http://www.tedu.cn/a.html
+			https://www.tedu.cn/server
+			以上地址是非同源的
+
+			http://localhost:5000/a.html
+			http://127.0.0.1:5000/server
+			以上地址是非同源
+	2.jquery对跨域的支持
+		jsonp - json with padding
+
+		$.ajax({
+			url:"请求地址",
+			type:"get",
+			dataType:"jsonp",
+			success:function(data){
+				
+			}
+		});
+
+
+蓝图 - Blueprint
+
+
+		retrun "callback_server12([{"id":1,"uname":"xxx"}])"
+
+<script src="/static/js/common.js"></script>
+
+
+
+
+
+
+
