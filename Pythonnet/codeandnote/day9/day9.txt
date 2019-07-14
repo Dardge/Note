@@ -1,0 +1,154 @@
+前情回顾
+
+1. Lock 互斥方法 
+   Lock() 
+	 acquire()  上锁
+	 release()  解锁
+
+2. GIL 问题 ： python线程全局解释器锁，导致python线程效率低下
+
+3. 总结了进程线程区别
+
+4. 通信模型
+   * 循环模型
+	 * IO并发
+	 * 进程线程并发
+
+5. 基于fork的多进程并发 
+
+6. ftp文件服务器模型
+
+************************************************
+一. 基于threading的多线程网络并发 （day9/thread_server）
+
+  原理 ： 每当一个客户端发起请求，就创建一个新的线程处理客户端请求，主线程循环等待其他客户端连接
+
+	实现步骤：* 创建监听套接字
+						* 循环接收客户端连接请求
+						* 当有新的客户端连接创建线程处理
+						* 主线程继续等待其他连接
+						* 客户端退出则对应线程结束
+
+
+二. socketserver模块完成网络并发模型 （day9/sock_server）
+
+  1. 使用方法 
+		 import  socketserver
+
+		 * 通过模块提供不同的类进行组合完成多进程或者多线程，tcp或者udp的并发行为
+	
+	2. 常用类
+	   StreamRequestHandler    处理流式套接字请求
+		 DatagramRequestHandler  处理数据报套接字请求
+
+		 TCPServer   创建tcp服务端
+		 UDPServer   创建udp服务端
+
+		 ForkingMixIn   多进程并发
+     ForkingTCPServer
+     ForkingUDPServer
+
+		 ThreadingMixIn  多线程并发
+		 ThreadingTCPServer
+		 ThreadingUDPServer
+  
+	3. 使用步骤
+	   
+		 【1】 创建服务器类，通过选择继承的类决定创建tcp或者udp，进程或者线程的并发
+		 【2】 创建请求处理类，根据服务器类型选择stream或者Datagram，重写handle方法做具体请求处理
+		 【3】 通过服务器类实例化对象，并绑定请求处理类
+		 【4】 通过服务器对象启动服务
+ 
+  4. 模块设计
+	   * 完成功能性类的编程
+		 * 需要用户自己实现的方法可以让用户重写
+		 * 需要用户自己决定的变量（地址）可以通过类传入
+
+三. HTTPServer 2.0 服务
+
+  1. 主要功能：
+	   * 接收客户端（浏览器）请求
+		 * 解析客户端请求
+		 * 根据请求组织数据
+		 * 将数据以响应格式发送给浏览器
+  
+	2. 升级
+	   * 采用多线程并发，可以满足多客户端同时请求
+		 * 做基本的网页请求解析，如果请求不是网页则返回一些简单内容
+		 * 通过类进行封装，将类提供给用户使用
+	
+	3. 技术点
+
+	  【1】 使用tcp套接字进行数据传输
+		【2】 使用多线程并发模型
+		【3】 HTTP协议格式
+		      GET  /   HTTP/1.1
+
+
+四. 协程技术
+
+  1. 定义 ： 纤程，微线程。是为非抢占式多任务产生子程序的计算机组件。协程允许不同入口点在不同位置开始或者暂停，简单来说，协程就是可以暂停执行的函数
+
+  * 协程本质就是一个可以暂停执行的函数。当该函数暂停时可以跳出函数执行其他内容，重新加载时可以继续执行而不是重新执行。
+
+	* yield 在python中时实现原生协程的关键字
+
+  2. 协程原理：记录一个函数的上下文栈帧，协程切换调度时会将记录的栈帧位置保存起来，切换回来时再进行调取，恢复原有执行内容，从上次位置继续执行
+
+	3. 协程优缺点
+	   
+		 优点 ： 占用资源少，效率高，可以同时在应用层完成多个任务
+
+		 缺点 ： 无法利用计算机多核
+	
+	4. 协程模块
+	   
+		【1】 greenlet  （day9/greelet_test）
+		     
+				 *  sudo  pip3 install  greenlet
+
+				 *  函数
+				    
+						greenlet.greenlet(func)
+						功能: 创建协程对象
+						参数：协程函数
+						
+						g.switch()
+						功能: 选择执行的协程
+
+      【2】 gevent  （day9/gevent_test）
+
+					1. 安装：  sudo  pip3 install gevent
+
+					2. 函数
+					   
+						 gevent.spawn(func,argv,...)
+						 功能 ： 生成协程对象
+						 参数 ： func  协程函数
+						         argv  协程函数参数
+						 返回值： 协程对象
+
+						 gevent.joinall(list,[timeout])
+						 功能: 阻塞等待协程执行完毕
+						 参数: list  协程对象列表
+
+						 gevent.sleep(sec)
+						 功能： gevent睡眠阻塞
+
+						 * gevent协程只有遇到gevent标记的阻塞行为才会自动跳转
+				
+				3. monkey插件 （day9/gevent_server） 
+
+				   功能：使普通的pythonIO阻塞行为变为可以触发gevent协程阻塞的行为
+
+					 使用： from  gevent  import  monkey
+						   
+					        在模块导入前，运行响应的monkey插件函数
+									e.g. 
+									  monkey.patch_all()
+										monkey.patch_socket()
+
+
+作业 ： 进程线程网路整理
+				复习mysql
+

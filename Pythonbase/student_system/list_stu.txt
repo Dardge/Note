@@ -1,0 +1,2 @@
+StudentModel(1,'zs',11,11)
+StudentModel(2,'zssss',343,565)
